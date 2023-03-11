@@ -1,0 +1,592 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Ancient Grannys Secret",
+      "description": "Recipe API with data handling for User and Recipe objects, and Meal and Cuisine categorical objects.",
+      "version": "1.0.0"
+    },
+    "host": "ancient-grannys-secret.onrender.com",
+    "basePath": "/",
+    "schemes": ["https"],
+    "paths": {
+      "/user/": {
+        "get": {
+          "tags": ["User"],
+          "description": "Returns all Users registered in the database.",
+          "produces": ["application/json"],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Returned all users successfully."
+            },
+            "400": {
+              "description": "Could not get Users due to a problem fetching from the database."
+            },
+            "500": {
+              "description": "There was an issue with the server."
+            }
+          }
+        },
+        "post": {
+          "tags": ["User"],
+          "description": "Creates a new User registered to the database.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "User object",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/user/{id}": {
+        "get": {
+          "tags": ["User"],
+          "description": "Returns one User from the database using a provided ID.",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Could not get Users due to a problem fetching from the database."
+            }
+          }
+        },
+        "put": {
+          "tags": ["User"],
+          "description": "Updates a specific User associated to provided ID with new data.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "User object",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["User"],
+          "description": "Deletes a User from the database.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "A valid User ID must be provided."
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/recipes/": {
+        "get": {
+          "tags": ["Recipes"],
+          "description": "Returns all Recipes currently registered in the database.",
+          "produces": ["application/json"],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Recipes"],
+          "description": "Creates one Recipe object and adds it to the database.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Recipe object",
+              "schema": {
+                "$ref": "#/definitions/Recipe"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/recipes/{id}": {
+        "get": {
+          "tags": ["Recipes"],
+          "description": "Returns one Recipe based on a provided ID.",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Recipes"],
+          "description": "Updates one Recipe based on a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Recipe object",
+              "schema": {
+                "$ref": "#/definitions/Recipe"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Recipes"],
+          "description": "Deletes one Recipe from the database associated to a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/meals/": {
+        "get": {
+          "tags": ["Meals"],
+          "description": "Returns all meal categories currently registered in the database.",
+          "produces": ["application/json"],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Meals"],
+          "description": "Creates one meal category object and adds it to the database.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Meal category object",
+              "schema": {
+                "$ref": "#/definitions/Meal"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/meals/{id}": {
+        "get": {
+          "tags": ["Meals"],
+          "description": "Returns one meal category based on a provided ID.",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Meals"],
+          "description": "Updates one meal category based on a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Recipe object",
+              "schema": {
+                "$ref": "#/definitions/Meal"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Meals"],
+          "description": "Deletes one meal category from the database associated to a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/cuisine/": {
+        "get": {
+          "tags": ["Cuisine"],
+          "description": "Returns all cuisine categories currently registered in the database.",
+          "produces": ["application/json"],
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "tags": ["Cuisine"],
+          "description": "Creates one cuisine category object and adds it to the database.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Meal category object",
+              "schema": {
+                "$ref": "#/definitions/Cuisine"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/cuisine/{id}": {
+        "get": {
+          "tags": ["Cuisine"],
+          "description": "Returns one cuisine category based on a provided ID.",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Cuisine"],
+          "description": "Updates one cuisine category based on a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Cuisine category object",
+              "schema": {
+                "$ref": "#/definitions/Cuisine"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "422": {
+              "description": "Unprocessable Entity"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Cuisine"],
+          "description": "Deletes one cuisine category from the database associated to a provided ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
+      
+    },
+    "definitions": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Alex"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Courter"
+          },
+          "userName": {
+            "type": "string",
+            "example": "Alexx1"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@test.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "dgfg2235135"
+          },
+          "bio": {
+            "type": "string",
+            "example": "A short user-submitted self-description"
+          },
+          
+          "image": {
+            "type": "string",
+            "example": "[need a way to include image. Maybe a link to where its hosted?]"
+          },
+          "recipes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "63f1be5d8d3384a384ba324b"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "recipeName": {
+            "type": "string",
+            "example": "Chocolate Milk"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "example": "Chocolate syrup"
+            }
+          },
+          "directions": {
+            "type":"string",
+            "example":"Mix chocolate syrup into milk."
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "example":"true"
+          }
+        }
+      },
+      "Meal": {
+        "type": "object",
+        "properties": {
+          "mealName": {
+            "type": "string",
+            "example": "Breakfast"
+          }
+        }
+      },
+      "Cuisine": {
+        "type": "object",
+        "properties": {
+          "taskName": {
+            "type": "string",
+            "example": "Barbecue"
+          }
+        }
+      }
+    }
+  }
+  
