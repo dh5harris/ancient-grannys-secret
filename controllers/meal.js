@@ -85,9 +85,32 @@ const deleteMeal = async (req, res) => {
 	}
 };
 
+// PUT Logic for updating recipe
+const updateMeal = async (req, res) => {
+	const mealId = new ObjectId(req.params.id);
+	// be aware of updateOne if you only want to update specific fields
+	const meal = {
+		mealNameBreakfast:req.body.mealNameBreakfast,
+		mealNameLunch:req.body.mealNameLunch,
+		mealNameDinner:req.body.mealNameDinner,
+	};
+	const response = await mongodb
+	  .getDb()
+	  .db()
+	  .collection('Meal')
+	  .replaceOne({ _id: mealId }, meal);
+	console.log(response);
+	if (response.modifiedCount > 0) {
+	  res.status(204).send();
+	} else {
+	  res.status(500).json(response.error || 'Some error occurred while updating the meal.');
+	}
+  };
+
 module.exports = { 
     getAll,
     getMeal,
 	createMeal,
-	deleteMeal
+	deleteMeal,
+	updateMeal
   };

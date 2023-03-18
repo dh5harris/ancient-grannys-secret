@@ -8,5 +8,6 @@ const recipeController = require('../controllers/recipe');
 // router.get('/:id', recipeController.getRecipe);
 
 router.delete('/:id', recipeController.deleteRecipe);
+router.put('/:id', recipeController.updateRecipe);
 
 module.exports = router;

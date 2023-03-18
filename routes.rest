@@ -1,0 +1,57 @@
+# # # # # PUT User
+# PUT http://localhost:8080/User/640be1331293bc944376825c HTTP/1.1 
+# Content-Type: application/json
+
+# {
+#     "userName":"StanDaMan",
+#     "firstName":"Stanley",
+#     "lastName":"Jablonski",
+#     "email":"stan@jablonski.com"
+
+# }
+
+# GET http://localhost:8080/user HTTP/1.1
+
+# # # # # # PUT Recipe
+# PUT http://localhost:8080/recipes/640be1e61293bc944376825d HTTP/1.1 
+# Content-Type: application/json
+
+# {
+#     "recipeName":"Best Awesome Lasagna",
+#     "ingredient01":"Noodles",
+#     "ingredient02":"Sauce",
+#     "ingredient03":"Beef",
+#     "ingredient04":"Mozzarella Cheese",
+#     "ingredient05":"",
+#     "ingredient06":"",
+#     "ingredient07":"",
+#     "ingredient08":"",
+#     "ingredient09":"",
+#     "ingredient10":"",
+#     "instructions":"Boil the noodles and drain.  Layer them\nin the bottom of the pan.  Add a layer of beef/sauce.\nMake two more alternating layers of beef and noodles.\nThrow in the oven at 400 degrees for 20 minutes.  Enjoy",
+#     "privateFlag":false
+    
+# }
+
+# # Put meal
+# PUT http://localhost:8080/meals/640be3721293bc944376825e HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "mealNameBreakfast":"Super Breakfast",
+#     "mealNameLunch":"Lunch",
+#     "mealNameDinner":"Dinner"
+    
+# }
+
+# Put cuisine
+# PUT http://localhost:8080/cuisine/640be3f71293bc944376825f HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "cusineFrench":"French Fried",
+#     "cuisineAmerican":"American",
+#     "cuisineItalian":"Italian",
+#     "cuisineMexican":"Mexican"
+    
+# }

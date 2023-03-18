@@ -55,8 +55,32 @@ const deleteUser = async (req, res) => {
 	}
 };
 
+// PUT Logic for updating user
+const updateUser = async (req, res) => {
+  const userId = new ObjectId(req.params.id);
+  // be aware of updateOne if you only want to update specific fields
+  const user = {
+    userName: req.body.userName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+  };
+  const response = await mongodb
+    .getDb()
+    .db()
+    .collection('User')
+    .replaceOne({ _id: userId }, user);
+  console.log(response);
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else {
+    res.status(500).json(response.error || 'Some error occurred while updating the user.');
+  }
+};
+
 module.exports = { 
     getAll,
     getUser,
-    deleteUser
+    deleteUser,
+    updateUser
   };

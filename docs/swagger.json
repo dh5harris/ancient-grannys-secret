@@ -96,7 +96,7 @@
           ],
           "responses": {
             "204": {
-              "description": "No Content"
+              "description": "Updated user successfully"
             },
             "400": {
               "description": "Bad Request"
@@ -220,7 +220,7 @@
           ],
           "responses": {
             "204": {
-              "description": "No Content"
+              "description": "Recipe updated successfully"
             },
             "400": {
               "description": "Bad Request"
@@ -341,7 +341,7 @@
           ],
           "responses": {
             "204": {
-              "description": "No Content"
+              "description": "Meal updated successfully"
             },
             "400": {
               "description": "Bad Request"

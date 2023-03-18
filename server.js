@@ -14,7 +14,7 @@ app
   .use((req, res, next) => {
   	res.setHeader('Access-Control-Allow-Origin', '*');
  		next();
-})
+  })
 	.use('/', require('./routes'));
 
 mongodb.initDb((err) => {
