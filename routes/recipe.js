@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const recipeController = require('../controllers/recipe');
-
-//Add back in when logic created
-// router.get('/', recipeController.getRecipe);
-// router.get('/:id', recipeController.getRecipe);
-
+router.get('/', recipeController.getAllRecipes);
+router.get('/:id', recipeController.getRecipe);
+router.post('/', recipeController.createRecipe);
 router.delete('/:id', recipeController.deleteRecipe);
 router.put('/:id', recipeController.updateRecipe);
 

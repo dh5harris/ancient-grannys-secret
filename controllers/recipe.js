@@ -1,6 +1,62 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
+//GET logic
+const getAllRecipes = async (req, res) => {
+	try {
+		const result = await mongodb.getDb().db('AncientGrannySecret').collection('Recipe').find();
+		result.toArray().then((lists) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.status(200).json(lists);
+	 });
+	}
+	catch(err) {
+		res.status(500).json(err);
+	}
+  };
+  
+const getRecipe = async (req, res) => {
+	try {
+		const recipeId = new ObjectId(req.params.id);
+		const result = await mongodb
+	  	.getDb()
+	  	.db('AncientGrannySecret')
+	  	.collection('Recipe')
+	  	.find({ _id: recipeId });
+		result.toArray().then((lists) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.status(200).json(lists[0]);
+	});
+	}
+	catch(err) {
+		res.status(500).json(err);
+	}
+};
+
+//POST logic
+const createRecipe = async (req, res) => {
+	try {
+	  const recipe = {
+		recipeName: req.body.recipeName,
+		//ingredients: ?
+		directions: req.body.directions,
+		//isPrivate: ? 	
+		};
+	  if (!req.body.recipeName) {
+		res.status(400).send({ message: 'Content can not be empty!' });
+		return;
+	  }
+	  const response = await mongodb.getDb().db('AncientGrannySecret').collection('Recipe').insertOne(recipe);
+		  if (response.acknowledged) {
+			  res.status(201).json(response);
+		  } else {
+			  res.status(500).json(response.error || 'Some error occurred while creating the recipe.');
+		  }
+	} catch(err) {
+		res.status(500).json(err);
+    }
+};
+
 //DELETE logic
 const deleteRecipe = async (req, res) => {
 	try {
@@ -63,6 +119,9 @@ const updateRecipe = async (req, res) => {
   };
 
 module.exports = {
+	getAllRecipes,
+	getRecipe,
+	createRecipe,
     deleteRecipe,
 	updateRecipe
 }

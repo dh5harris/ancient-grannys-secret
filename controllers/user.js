@@ -1,6 +1,8 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
+const passwordUtil = require('../validate/passwordCheck');
 
+//GET logic
 const getAll = async (req, res) => {
   const result = await mongodb
     .getDb()
@@ -24,6 +26,40 @@ const getUser = async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(lists[0]);
   });
+};
+
+//POST logic
+const createUser = async (req, res) => {
+  try {
+    const user = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+			userName: req.body.userName,
+      email: req.body.email,
+      password: req.body.password,
+      bio: req.body.bio,
+      image: req.body.image
+      //recipes: ?
+		};
+    if (!req.body.userName || !req.body.password) {
+      res.status(400).send({ message: 'Content can not be empty!' });
+      return;
+    }
+    const password = req.body.password;
+    const passwordCheck = passwordUtil.passwordPass(password);
+    if (passwordCheck.error) {
+      res.status(400).send({ message: passwordCheck.error });
+      return;
+    }
+    const response = await mongodb.getDb().db('AncientGrannySecret').collection('User').insertOne(user);
+		if (response.acknowledged) {
+			res.status(201).json(response);
+		} else {
+			res.status(500).json(response.error || 'Some error occurred while creating the user.');
+		}
+	} catch(err) {
+		res.status(500).json(err);
+	}
 };
 
 //DELETE logic
@@ -81,6 +117,7 @@ const updateUser = async (req, res) => {
 module.exports = { 
     getAll,
     getUser,
+    createUser,
     deleteUser,
     updateUser
   };
