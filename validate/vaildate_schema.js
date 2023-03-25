@@ -1,11 +1,11 @@
 const Joi = require('@hapi/joi');
 
 const mealSchema = Joi.object({
-	mealName: Joi.string().alphamun().required()
+	mealName: Joi.string().alphanum().required()
 })
 
 const cuisineSchema = Joi.object({
-	cuisineName: Joi.string().alphamun().required()
+	cuisineName: Joi.string().alphanum().required()
 })
 
 module.exports = {mealSchema, cuisineSchema}

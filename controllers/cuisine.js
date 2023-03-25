@@ -1,8 +1,8 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-// Validation ?
-// const { cuisineSchema } = require('../validate/validate_schema');
+// Validation
+const { cuisineSchema } = require('../validate/vaildate_schema');
 
 const getAll = async (req, res) => {
 	try {
@@ -44,8 +44,8 @@ const createCuisine = async(req, res) => {
 		let cuisineName = {
 			cuisineName: req.body.cuisineName
 		};
-		// validation?
-		// cuisineName = await cuisineSchema.validateAsync(cuisineName)
+		// validation
+		cuisineName = await cuisineSchema.validateAsync(cuisineName)
 		const response = await mongodb.getDb().db('AncientGrannySecret').collection('Cuisine').insertOne(cuisineName);
 		if (response.ackownledged) {
 			res.status(201).json(response);
@@ -53,7 +53,11 @@ const createCuisine = async(req, res) => {
 			res.status(500).json(response.error || 'An error occured while creating the Cuisine category');
 		}
 	} catch(err) {
-		res.status(500).json(err);
+		if(err.isJoi === true){
+			res.status(422).json(err.message);
+		} else {
+			res.status(500).json(err);
+		}
 	}
 }
 
@@ -91,11 +95,15 @@ const updateCuisine = async (req, res) => {
 	const cuisineId = new ObjectId(req.params.id);
 	// be aware of updateOne if you only want to update specific fields
 	const cuisine = {
-		cusineFrench:req.body.cusineFrench,
-		cuisineAmerican:req.body.cuisineAmerican,
-		cuisineItalian:req.body.cuisineItalian,
-		cuisineMexican:req.body.cuisineMexican,
+		// cusineFrench:req.body.cusineFrench,
+		// cuisineAmerican:req.body.cuisineAmerican,
+		// cuisineItalian:req.body.cuisineItalian,
+		// cuisineMexican:req.body.cuisineMexican,
+		cuisineName: req.body.cuisineName
 	};
+	//validation via Joi
+	cuisineName = await cuisineSchema.validateAsync(cuisineName)
+
 	const response = await mongodb
 	  .getDb()
 	  .db()

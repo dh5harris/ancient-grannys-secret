@@ -1,8 +1,8 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-// Validation ?
-// const { mealSchema } = require('../validate/validate_schema');
+// Validation
+const { mealSchema } = require('../validate/vaildate_schema');
 
 const getAll = async (req, res) => {
 	try {
@@ -43,8 +43,8 @@ const createMeal = async(req, res) => {
 		let mealName = {
 			mealName: req.body.mealName
 		};
-		// validation?
-		// mealName = await mealSchema.validateAsync(mealName)
+		// validation
+		mealName = await mealSchema.validateAsync(mealName)
 		const response = await mongodb.getDb().db('AncientGrannySecret').collection('Meal').insertOne(mealName);
 		if (response.ackownledged) {
 			res.status(201).json(response);
@@ -90,9 +90,10 @@ const updateMeal = async (req, res) => {
 	const mealId = new ObjectId(req.params.id);
 	// be aware of updateOne if you only want to update specific fields
 	const meal = {
-		mealNameBreakfast:req.body.mealNameBreakfast,
-		mealNameLunch:req.body.mealNameLunch,
-		mealNameDinner:req.body.mealNameDinner,
+		// mealNameBreakfast:req.body.mealNameBreakfast,
+		// mealNameLunch:req.body.mealNameLunch,
+		// mealNameDinner:req.body.mealNameDinner,
+		mealName: req.body.mealName
 	};
 	const response = await mongodb
 	  .getDb()

@@ -38,8 +38,8 @@ const createUser = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       bio: req.body.bio,
-      image: req.body.image
-      //recipes: ?
+      image: req.body.image,
+      recipes: req.body.recipes
 		};
     if (!req.body.userName || !req.body.password) {
       res.status(400).send({ message: 'Content can not be empty!' });
@@ -100,6 +100,20 @@ const updateUser = async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
+    password: req.body.password,
+    bio: req.body.bio,
+    image: req.body.image,
+    recipes: req.body.recipes
+  };
+  if (!req.body.userName || !req.body.password) {
+    res.status(400).send({ message: 'Content can not be empty!' });
+    return;
+  }
+  const password = req.body.password;
+  const passwordCheck = passwordUtil.passwordPass(password);
+  if (passwordCheck.error) {
+    res.status(400).send({ message: passwordCheck.error });
+    return;
   };
   const response = await mongodb
     .getDb()
