@@ -92,29 +92,34 @@ const deleteCuisine = async (req, res) => {
 
 // PUT Logic for updating cuisine
 const updateCuisine = async (req, res) => {
-	const cuisineId = new ObjectId(req.params.id);
-	// be aware of updateOne if you only want to update specific fields
-	const cuisine = {
-		// cusineFrench:req.body.cusineFrench,
-		// cuisineAmerican:req.body.cuisineAmerican,
-		// cuisineItalian:req.body.cuisineItalian,
-		// cuisineMexican:req.body.cuisineMexican,
-		cuisineName: req.body.cuisineName
-	};
-	//validation via Joi
-	cuisineName = await cuisineSchema.validateAsync(cuisineName)
-
-	const response = await mongodb
-	  .getDb()
-	  .db()
-	  .collection('Cuisine')
-	  .replaceOne({ _id: cuisineId }, cuisine);
-	console.log(response);
-	if (response.modifiedCount > 0) {
-	  res.status(204).send();
-	} else {
-	  res.status(500).json(response.error || 'Some error occurred while updating the cuisine.');
+	try {
+		const cuisineId = new ObjectId(req.params.id);
+		// be aware of updateOne if you only want to update specific fields
+		const cuisine = {
+			// cusineFrench:req.body.cusineFrench,
+			// cuisineAmerican:req.body.cuisineAmerican,
+			// cuisineItalian:req.body.cuisineItalian,
+			// cuisineMexican:req.body.cuisineMexican,
+			cuisineName: req.body.cuisineName
+		};
+		//validation via Joi
+		cuisineName = await cuisineSchema.validateAsync(cuisineName);
+	
+		const response = await mongodb
+		  .getDb()
+		  .db()
+		  .collection('Cuisine')
+		  .replaceOne({ _id: cuisineId }, cuisine);
+		console.log(response);
+		if (response.modifiedCount > 0) {
+		  res.status(204).send();
+		} else {
+		  res.status(500).json(response.error || 'Some error occurred while updating the cuisine.');
+		}
+	} catch(err){
+		res.status(500).json(err);
 	}
+	
   };
 
 module.exports = { 
