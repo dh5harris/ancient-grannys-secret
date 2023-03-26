@@ -38,14 +38,17 @@ const createRecipe = async (req, res) => {
 	try {
 	  const recipe = {
 		recipeName: req.body.recipeName,
-		//ingredients: ?
+		ingredients: req.body.ingredients,
 		directions: req.body.directions,
-		//isPrivate: ? 	
+		isPrivate: req.body.isPrivate
 		};
 	  if (!req.body.recipeName) {
 		res.status(400).send({ message: 'Content can not be empty!' });
 		return;
 	  }
+	  //data validation
+	  //const recipeCheck = await recipeSchema.validateAsync(recipe);
+
 	  const response = await mongodb.getDb().db('AncientGrannySecret').collection('Recipe').insertOne(recipe);
 		  if (response.acknowledged) {
 			  res.status(201).json(response);
@@ -88,33 +91,32 @@ const deleteRecipe = async (req, res) => {
 
 // PUT Logic for updating recipe
 const updateRecipe = async (req, res) => {
-	const recipeId = new ObjectId(req.params.id);
-	// be aware of updateOne if you only want to update specific fields
-	const recipe = {
-	  recipeName: req.body.recipeName,
-	  ingredient01: req.body.ingredient01,
-	  ingredient02: req.body.ingredient02,
-	  ingredient03: req.body.ingredient03,
-	  ingredient04: req.body.ingredient04,
-	  ingredient05: req.body.ingredient05,
-	  ingredient06: req.body.ingredient06,
-	  ingredient07: req.body.ingredient07,
-	  ingredient08: req.body.ingredient08,
-	  ingredient09: req.body.ingredient09,
-	  ingredient10: req.body.ingredient10,
-	  instructions: req.body.instructions,
-	  privateFlag: req.body.privateFlag,
-	};
-	const response = await mongodb
-	  .getDb()
-	  .db()
-	  .collection('Recipe')
-	  .replaceOne({ _id: recipeId }, recipe);
-	console.log(response);
-	if (response.modifiedCount > 0) {
-	  res.status(204).send();
-	} else {
-	  res.status(500).json(response.error || 'Some error occurred while updating the recipe.');
+	try {
+		const recipeId = new ObjectId(req.params.id);
+		// be aware of updateOne if you only want to update specific fields
+		const recipe = {
+		  recipeName: req.body.recipeName,
+		  ingredients: req.body.ingredients,
+		  directions: req.body.directions,
+		  isPrivate: req.body.isPrivate
+		};
+
+		//data validation
+		//const recipeCheck = await recipeSchema.validateAsync(recipe);
+
+		const response = await mongodb
+		  .getDb()
+		  .db()
+		  .collection('Recipe')
+		  .replaceOne({ _id: recipeId }, recipe);
+		console.log(response);
+		if (response.modifiedCount > 0) {
+		  res.status(204).send();
+		} else {
+		  res.status(500).json(response.error || 'Some error occurred while updating the recipe.');
+		}
+	} catch(err) {
+		res.status(500).json(err);
 	}
   };
 
