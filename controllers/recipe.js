@@ -1,6 +1,6 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
-
+const {recipeSchema} = require('../validate/vaildate_schema');
 //GET logic
 const getAllRecipes = async (req, res) => {
 	try {
@@ -102,7 +102,7 @@ const updateRecipe = async (req, res) => {
 		};
 
 		//data validation
-		//const recipeCheck = await recipeSchema.validateAsync(recipe);
+		const recipeCheck = await recipeSchema.validateAsync(recipe);
 
 		const response = await mongodb
 		  .getDb()
