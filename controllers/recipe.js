@@ -1,6 +1,7 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 const {recipeSchema} = require('../validate/vaildate_schema');
+
 //GET logic
 const getAllRecipes = async (req, res) => {
 	try {
@@ -36,7 +37,7 @@ const getRecipe = async (req, res) => {
 //POST logic
 const createRecipe = async (req, res) => {
 	try {
-	  const recipe = {
+	  let recipe = {
 		recipeName: req.body.recipeName,
 		ingredients: req.body.ingredients,
 		directions: req.body.directions,
@@ -46,8 +47,8 @@ const createRecipe = async (req, res) => {
 		res.status(400).send({ message: 'Content can not be empty!' });
 		return;
 	  }
-	  //data validation
-	  //const recipeCheck = await recipeSchema.validateAsync(recipe);
+	  //data validation via Joi
+	  recipe = await recipeSchema.validateAsync(recipe);
 
 	  const response = await mongodb.getDb().db('AncientGrannySecret').collection('Recipe').insertOne(recipe);
 		  if (response.acknowledged) {
@@ -94,15 +95,15 @@ const updateRecipe = async (req, res) => {
 	try {
 		const recipeId = new ObjectId(req.params.id);
 		// be aware of updateOne if you only want to update specific fields
-		const recipe = {
+		let recipe = {
 		  recipeName: req.body.recipeName,
 		  ingredients: req.body.ingredients,
 		  directions: req.body.directions,
 		  isPrivate: req.body.isPrivate
 		};
 
-		//data validation
-		const recipeCheck = await recipeSchema.validateAsync(recipe);
+		//data validation via Joi
+		recipe = await recipeSchema.validateAsync(recipe);
 
 		const response = await mongodb
 		  .getDb()
@@ -118,7 +119,7 @@ const updateRecipe = async (req, res) => {
 	} catch(err) {
 		res.status(500).json(err);
 	}
-  };
+};
 
 module.exports = {
 	getAllRecipes,

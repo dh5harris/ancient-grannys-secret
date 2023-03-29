@@ -2,6 +2,9 @@ const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 const passwordUtil = require('../validate/passwordCheck');
 
+// Validation
+const { userSchema } = require('../validate/vaildate_schema');
+
 //GET logic
 const getAll = async (req, res) => {
   const result = await mongodb
@@ -31,7 +34,7 @@ const getUser = async (req, res) => {
 //POST logic
 const createUser = async (req, res) => {
   try {
-    const user = {
+    let user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
 			userName: req.body.userName,
@@ -51,6 +54,8 @@ const createUser = async (req, res) => {
       res.status(400).send({ message: passwordCheck.error });
       return;
     }
+		// validation via Joi
+		user = await userSchema.validateAsync(user);
     const response = await mongodb.getDb().db('AncientGrannySecret').collection('User').insertOne(user);
 		if (response.acknowledged) {
 			res.status(201).json(response);
@@ -95,7 +100,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const userId = new ObjectId(req.params.id);
   // be aware of updateOne if you only want to update specific fields
-  const user = {
+  let user = {
     userName: req.body.userName,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -115,6 +120,8 @@ const updateUser = async (req, res) => {
     res.status(400).send({ message: passwordCheck.error });
     return;
   };
+	// validation via Joi
+	user = await userSchema.validateAsync(user);
   const response = await mongodb
     .getDb()
     .db()

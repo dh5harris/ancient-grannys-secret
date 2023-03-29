@@ -4,6 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 // Validation
 const { cuisineSchema } = require('../validate/vaildate_schema');
 
+//GET all logic
 const getAll = async (req, res) => {
 	try {
 		const result = await mongodb
@@ -21,6 +22,7 @@ const getAll = async (req, res) => {
 	}
 };
 
+//GET one logic
 const getCuisine = async (req, res) => {
 	try {
 		const cuisineId = new ObjectId(req.params.id);
@@ -39,13 +41,14 @@ const getCuisine = async (req, res) => {
 	}
 };
 
+//POST logic
 const createCuisine = async(req, res) => {
 	try {
 		let cuisineName = {
 			cuisineName: req.body.cuisineName
 		};
-		// validation
-		cuisineName = await cuisineSchema.validateAsync(cuisineName)
+		// validation via Joi
+		cuisineName = await cuisineSchema.validateAsync(cuisineName);
 		const response = await mongodb.getDb().db('AncientGrannySecret').collection('Cuisine').insertOne(cuisineName);
 		if (response.ackownledged) {
 			res.status(201).json(response);
@@ -95,11 +98,7 @@ const updateCuisine = async (req, res) => {
 	try {
 		const cuisineId = new ObjectId(req.params.id);
 		// be aware of updateOne if you only want to update specific fields
-		const cuisine = {
-			// cusineFrench:req.body.cusineFrench,
-			// cuisineAmerican:req.body.cuisineAmerican,
-			// cuisineItalian:req.body.cuisineItalian,
-			// cuisineMexican:req.body.cuisineMexican,
+		let cuisineName = {
 			cuisineName: req.body.cuisineName
 		};
 		//validation via Joi
@@ -109,7 +108,7 @@ const updateCuisine = async (req, res) => {
 		  .getDb()
 		  .db()
 		  .collection('Cuisine')
-		  .replaceOne({ _id: cuisineId }, cuisine);
+		  .replaceOne({ _id: cuisineId }, cuisineName);
 		console.log(response);
 		if (response.modifiedCount > 0) {
 		  res.status(204).send();
