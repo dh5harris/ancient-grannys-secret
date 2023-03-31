@@ -581,7 +581,7 @@
       "Cuisine": {
         "type": "object",
         "properties": {
-          "taskName": {
+          "cuisineName": {
             "type": "string",
             "example": "Barbecue"
           }

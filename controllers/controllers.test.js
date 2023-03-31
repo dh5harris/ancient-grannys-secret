@@ -4,10 +4,13 @@ const meal = require('./meal');
 const recipe = require('./recipe');
 const user = require('./user');
 
-// const mongodb = require('../db/connect');
+//why this and not the connect.js module?
+//the Jest-mongodb package uses a "test" mongoDB server, which never edits our original db.
+//calling in a separate mongo client and the code below in the describe function is necessary
+//for it to work.
 const {MongoClient} = require('mongodb');
 
-describe('insert', () => {
+describe('MongoDB CRUD', () => {
   let connection;
   let db;
 
@@ -38,6 +41,7 @@ describe('insert', () => {
     ]
 }
 
+//a test user to update a previously added user. All fields will validate correctly
   const updatedMockUser = {
     _id: 'test-user-id',
     firstName: 'New',
@@ -51,6 +55,9 @@ describe('insert', () => {
         {id: '63f1be5d8d3384a384ba324b'}
     ]
   }
+
+//a test user that will NOT validate correctly, to test validation and error handling
+//TODO: error user template
 
   //TODO: Might be able to add Joi validation checks to the tests
   //TODO: add error checks.
@@ -88,17 +95,16 @@ it('should update a User in MongoDB', async () => {
 
 it('should delete a User in MongoDB', async () => {
   const users = db.collection('User');
-  //will test the update against this string
+  //user ID of the test user
   const userID = 'test-user-id';
 
   //the user was already inserted in previous test
-  const testUser = await users.findOne({_id:'test-user-id'});
-
   await users.deleteOne({_id: userID});
 
-  //reformat next line too test for a deleted user
+  //the user cannot be found and should be null
   const User = await users.findOne({_id:'test-user-id'});
 
-  //TODO: Expect clause that deals with the error of "finding" a deleted/non-existent user. This test will run after logic has proved that a user can be added and found.
+  expect(User).toBeNull();
 });
-}); //end testing
+}); //end testing MongoDB
+
