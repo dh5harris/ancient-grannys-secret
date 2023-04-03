@@ -50,7 +50,7 @@ const createCuisine = async(req, res) => {
 		// validation via Joi
 		cuisineName = await cuisineSchema.validateAsync(cuisineName);
 		const response = await mongodb.getDb().db('AncientGrannySecret').collection('Cuisine').insertOne(cuisineName);
-		if (response.ackownledged) {
+		if (response.acknowledged) {
 			res.status(201).json(response);
 		} else {
 			res.status(500).json(response.error || 'An error occured while creating the Cuisine category');
