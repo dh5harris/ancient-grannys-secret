@@ -36,12 +36,12 @@ describe("Test routes", () => {
   });
   test("PUT /user/:id Response should be 204", () => {
     return request(app)
-      .post("/test/user")
-      .expect(201);
+      .put("/test/user/1")
+      .expect(204);
   });
   test("DELETE /user/:id Response should be 200", () => {
     return request(app)
-      .post("/test/user")
-      .expect(201);
+      .delete("/test/user/1")
+      .expect(200);
   });
 });
