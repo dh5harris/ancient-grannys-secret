@@ -63,12 +63,25 @@ router.delete('/test/user/:id', (req,res)=>{
 
 const mockRecipeList = [
     {
+        _id: "63f1be5d8d3384a384ba324b",
         recipeName: "Chocolate Milk",
         ingredients: [
           "Chocolate syrup"
         ],
         directions: "Mix chocolate syrup into milk.",
         isPrivate: true
+      },
+      {
+        _id: "63f1be5d8d3384a384ba324a",
+        recipeName: "Taco",
+        ingredients: [
+          "Taco Shell",
+          "Meat",
+          "Cheese",
+          "Tomato"
+        ],
+        directions: "Cook meat. Prepare toppings. After meat is golden brown, add to taco shells. Add toppings, serve.",
+        isPrivate: false
       }
 ];
 //RECIPE COLLECTION
@@ -97,6 +110,10 @@ const mockmealList = [
     {
         _id: "640be3721293bc944376825e",
         mealName: "Breakfast"
+      },
+      {
+        _id: "640be3721293bc944376825f",
+        mealName: "Dinner"
       }
 ]
 //MEALS COLLECTION
@@ -126,7 +143,32 @@ const mockCuisineList = [
     {
         _id: "640be3721293bc944376825e",
         cuisineName: "Italian"
+      },
+      {
+        _id: "640be3721293bc944376825a",
+        cuisineName: "Mexican"
       }
-]
+];
+//CUISINE COLLECTION
+router.get('/test/cuisine', (req,res)=>{
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(mockCuisineList);});
+router.get('/test/cuisine/:id', (req,res)=>{
+    res.setHeader('Content-Type', 'application/json');
+	res.status(200).json(mockCuisineList[0]);
+});
+router.post('/test/cuisine/', (req,res)=>{
+    const mockCuisine = mockCuisineList[0];
+    res.setHeader('Content-Type', 'application/json');
+	res.status(201).json(mockCuisine);
+});
+router.put('/test/cuisine/:id', (req,res)=>{
+    res.setHeader('Content-Type', 'application/json');
+	res.status(204).send();
+});
+router.delete('/test/cuisine/:id', (req,res)=>{
+    res.setHeader('Content-Type', 'application/json');
+	res.status(200).send();
+});
 
 module.exports = router;

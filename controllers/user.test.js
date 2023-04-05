@@ -1,8 +1,21 @@
-//import cuisine.js, meal.js, recipe.js, and user.js controllers from controllers folder
-const cuisine = require('./cuisine');
-const meal = require('./meal');
-const recipe = require('./recipe');
-const user = require('./user');
+const mongodb = require('../db/connect');
+const ObjectId = require('mongodb').ObjectId;
+const passwordUtil = require('../validate/passwordCheck');
+const { userSchema } = require('../validate/vaildate_schema');
+
+test('User Controller: Modules/Packages connect', ()=>{
+  //ensure packages are not null
+  expect(ObjectId).not.toBeNull;
+  expect(passwordUtil).not.toBeNull;
+  expect(userSchema).not.toBeNull;
+  expect(mongodb).not.toBeNull;
+
+  //ensure packages are not undefined
+  expect(ObjectId).not.toBeUndefined;
+  expect(passwordUtil).not.toBeUndefined;
+  expect(userSchema).not.toBeUndefined;
+  expect(mongodb).not.toBeUndefined;
+});
 
 //why this and not the connect.js module?
 //the Jest-mongodb package uses a "test" mongoDB server, which never edits our original db.
@@ -10,7 +23,7 @@ const user = require('./user');
 //for it to work.
 const {MongoClient} = require('mongodb');
 
-describe('MongoDB CRUD', () => {
+describe('MongoDB CRUD for Users', () => {
   let connection;
   let db;
 
@@ -55,13 +68,6 @@ describe('MongoDB CRUD', () => {
         {id: '63f1be5d8d3384a384ba324b'}
     ]
   }
-
-//a test user that will NOT validate correctly, to test validation and error handling
-//TODO: error user template
-
-  //TODO: Might be able to add Joi validation checks to the tests
-  //TODO: add error checks.
-
 
 
 //test USER routes

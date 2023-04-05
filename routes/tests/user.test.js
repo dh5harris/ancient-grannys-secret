@@ -1,10 +1,8 @@
 const request = require("supertest");
 const express = require('express');
 const bodyParser = require('body-parser')
-// const {MongoClient} = require('mongodb');
 const app = express();
 
-// const port = process.env.PORT || 8080;
 // //create a mock app here so that tests can run on routes properly.
 // //Why not server.js?: gets stuck without auth secret, which we may not want to reveal to these tests
 app
@@ -13,11 +11,11 @@ app
   	res.setHeader('Access-Control-Allow-Origin', '*');
  		next();
   })
-	.use('/', require('./tests/index'));
+	.use('/', require('./mockRoutes'));
 
 //employs mock routes for each of the collections to test functionality and connection.
 //mock routes will return mock data as expected in production set up.
-describe("Test routes", () => {
+describe("Test User routes", () => {
 
   test("GET /user/ Response should be 200 with valid user list", () => {
     return request(app)
