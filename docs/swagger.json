@@ -529,7 +529,7 @@
           
           "image": {
             "type": "string",
-            "example": "[need a way to include image. Maybe a link to where its hosted?]"
+            "example": "[base64 or link placeholder]"
           },
           "recipes": {
             "type": "array",

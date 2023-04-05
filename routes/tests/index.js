@@ -8,7 +8,7 @@ const mockUserList = [
     {
       _id: "640be1331293bc944376825c",
       userName: "testUser1",
-      firstNam: "Stanley",
+      firstName: "Stanley",
       lastName: "Jablonski",
       email: "stan@jablonski.com",
       password: "ARW2388@2",
@@ -23,7 +23,7 @@ const mockUserList = [
     {
         _id: "640be1331293bc944376825d",
         userName: "testUser2",
-        firstNam: "Stanley",
+        firstName: "Stanley",
         lastName: "Jablonski",
         email: "stan@jablonski.com",
         password: "ARW2388@2",
