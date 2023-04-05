@@ -41,8 +41,7 @@ const createUser = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       bio: req.body.bio,
-      image: req.body.image,
-      recipes: req.body.recipes
+      image: req.body.image
 		};
     if (!req.body.userName || !req.body.password) {
       res.status(400).send({ message: 'Content can not be empty!' });
@@ -107,8 +106,7 @@ const updateUser = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     bio: req.body.bio,
-    image: req.body.image,
-    recipes: req.body.recipes
+    image: req.body.image
   };
   if (!req.body.userName || !req.body.password) {
     res.status(400).send({ message: 'Content can not be empty!' });
