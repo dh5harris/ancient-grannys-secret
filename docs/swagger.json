@@ -537,18 +537,6 @@
           "image": {
             "type": "string",
             "example": "[base64 or link placeholder]"
-          },
-          "recipes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "example": "63f1be5d8d3384a384ba324b"
-                }
-              }
-            }
           }
         }
       },

@@ -24,10 +24,7 @@ const userSchema = Joi.object({
 	lastName: Joi.string().alphanum().required(),
 	email: Joi.string().email().lowercase().required(),
 	bio: Joi.string(),
-	image: Joi.string(),
-	recipes: Joi.array().items(
-		Joi.string().required()
-	)
+	image: Joi.string()
 })
 
 module.exports = {mealSchema, cuisineSchema, recipeSchema, userSchema}
