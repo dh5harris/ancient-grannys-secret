@@ -13,12 +13,13 @@ const recipeSchema = Joi.object({
 	ingredients: Joi.array().items(
 		Joi.string().alphanum().required()
 	).required(),
-	directions: Joi.string().required()
+	directions: Joi.string().required(),
+	isPrivate: Joi.boolean()
 })
 
 const userSchema = Joi.object({
 	userName: Joi.string().alphanum().required(),
-	password: Joi.string().pattern(/^[a-zA-Z0-9]+$/).required(),
+	password: Joi.string().required(),
 	firstName: Joi.string().alphanum().required(),
 	lastName: Joi.string().alphanum().required(),
 	email: Joi.string().email().lowercase().required()
