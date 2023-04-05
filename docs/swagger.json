@@ -16,13 +16,6 @@
       }
     },
     "paths": {
-      "/api-docs": {
-        "get": {
-          "description": "",
-          "parameters": [],
-          "responses": {}
-        }
-      },
       "/user/": {
         "get": {
           "tags": ["User"],
