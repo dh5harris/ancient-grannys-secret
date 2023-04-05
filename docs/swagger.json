@@ -8,6 +8,13 @@
     "host": "ancient-grannys-secret.onrender.com",
     "basePath": "/",
     "schemes": ["https"],
+    "securityDefinitions": {
+      "oAuthSample": {
+        "type": "oauth2",
+        "authorizationUrl": "https://ancient-grannys-secret.onrender.com/login",
+        "flow": "authorizationCode"
+      }
+    },
     "paths": {
       "/user/": {
         "get": {
