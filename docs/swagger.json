@@ -511,15 +511,15 @@
         "properties": {
           "firstName": {
             "type": "string",
-            "example": "Alex"
+            "example": "Joe"
           },
           "lastName": {
             "type": "string",
-            "example": "Courter"
+            "example": "Dude"
           },
           "userName": {
             "type": "string",
-            "example": "Alexx1"
+            "example": "user1"
           },
           "email": {
             "type": "string",
@@ -527,7 +527,7 @@
           },
           "password": {
             "type": "string",
-            "example": "dgfg2235135"
+            "example": "dgGfg2235135"
           },
           "bio": {
             "type": "string",
@@ -545,13 +545,13 @@
         "properties": {
           "recipeName": {
             "type": "string",
-            "example": "Chocolate Milk"
+            "example": "ChocolateMilk"
           },
           "ingredients": {
             "type": "array",
             "items": {
                 "type": "string",
-                "example": "Chocolate syrup"
+                "example": "ChocolateSyrup"
             }
           },
           "directions": {
